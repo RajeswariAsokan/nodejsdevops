@@ -42,7 +42,7 @@ stages:
         azureSubscription: 'Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)'
         appType: 'webAppLinux'
         WebAppName: 'nodejs-final'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
     
         
 
