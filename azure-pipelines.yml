@@ -1,22 +1,47 @@
 trigger:
  - none
-pool: 
- name: "Azure Pipelines"
-steps:
- - task: Npm@1
-   displayName: "npm install"
-   inputs:
-    command: install
- - task: ArchiveFiles@1
-   displayName: "Archive files"
-   inputs:
-     archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
-     archiveType: default
-     rootFolder: "$(System.DefaultWorkingDirectory)"
- - task: PublishBuildArtifacts@1
-   displayName: "Publish artifact"
-   inputs:
-    PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-    publishLocation: "container"
-    ArtifactName: nodejs
+stages:
+- stage: Build
+  jobs:
+   - job: Build
+     pool: 
+      name: "Azure Pipelines"
+     steps:
+     - task: Npm@1
+       displayName: "npm install"
+       inputs:
+         command: install
+     - task: ArchiveFiles@1
+       displayName: "Archive files"
+       inputs:
+         archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+         archiveType: default
+         rootFolder: "$(System.DefaultWorkingDirectory)"
+     - task: PublishBuildArtifacts@1
+       displayName: "Publish artifact"
+       inputs:
+         PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+         publishLocation: "container"
+         ArtifactName: nodejs
+- stage: Deploy
+  jobs:
+  - job: Deploy
+    pool: 
+     name: "Azure Pipelines"
+    steps:
+    - task: DownloadBuildArtifacts@0
+      displayName: "download artifacts"
+      inputs:
+        buildType: 'current'
+        downloadType: 'specific'
+        downloadPath: '$(System.ArtifactsDirectory)'   
+    - task: AzureRMWebAppDeployment@4
+      inputs:
+       appType: webAppLinux
+       azureSubscription: "Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)"
+       ConnectionType: AzureRM
+       packageForLinux: "$(System.ArtifactsDirectory)"
+       WebAppName: 'devopsnodejsprod'
+        
+        
 
