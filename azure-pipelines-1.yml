@@ -29,7 +29,7 @@ stages:
     pool: 
      name: "Azure Pipelines"
     steps:
-    - task: DownloadBuildArtifacts@0
+    - task: DownloadBuildArtifacts@1
       displayName: "download artifacts"
       inputs:
         buildType: 'current'
@@ -40,9 +40,10 @@ stages:
       inputs:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)'
+        packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
         appType: 'webAppLinux'
         WebAppName: 'nodejs-final'
-        packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
+        
     
         
 
