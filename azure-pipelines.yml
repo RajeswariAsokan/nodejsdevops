@@ -17,6 +17,6 @@ steps:
    displayName: "Publish artifact"
    inputs:
     PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-    publishLocation: "Container"
+    publishLocation: "filepath"
     ArtifactName: nodejs
 
