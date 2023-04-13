@@ -38,10 +38,10 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)'   
     - task: AzureRMWebAppDeployment@4
       inputs:
-       appType: webAppLinux
-       azureSubscription: "Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)"
        ConnectionType: AzureRM
+       azureSubscription: "Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)"
        packageForLinux: "$(System.ArtifactsDirectory)/**/*.zip"
+       appType: webAppLinux
        WebAppName: 'devopsnodejsdev'
         
         
