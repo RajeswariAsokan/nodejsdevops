@@ -10,13 +10,13 @@ steps:
  - task: ArchiveFiles@1
    displayName: "Archive files"
    inputs:
-     archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+     archiveFile: "$(Build.ArtifactStagingDirectory)"
      archiveType: default
      rootFolder: "$(System.DefaultWorkingDirectory)"
  - task: PublishBuildArtifacts@1
    displayName: "Publish artifact"
    inputs:
     PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-    publishLocation: "filepath"
+    publishLocation: "container"
     ArtifactName: nodejs
 
