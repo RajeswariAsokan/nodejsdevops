@@ -33,14 +33,16 @@ stages:
       inputs:
         buildType: 'current'
         downloadType: 'specific'
+        itemPattern: '**/*.zip'
         downloadPath: '$(System.ArtifactsDirectory)'
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)'
+        packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
         appType: 'webAppLinux'
         WebAppName: 'nodejsdevopstest'
-        packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
+        
   
          
 
