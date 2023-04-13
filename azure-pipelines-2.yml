@@ -1,0 +1,22 @@
+trigger:
+ - none
+pool: 
+ name: "Azure Pipelines"
+steps:
+ - task: Npm@1
+   displayName: "npm install"
+   inputs:
+    command: install
+ - task: ArchiveFiles@1
+   displayName: "Archive files"
+   inputs:
+     archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+     archiveType: default
+     rootFolder: "$(System.DefaultWorkingDirectory)"
+ - task: PublishBuildArtifacts@1
+   displayName: "Publish artifact"
+   inputs:
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+    publishLocation: "container"
+    ArtifactName: nodejs
+
