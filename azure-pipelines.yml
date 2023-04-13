@@ -34,6 +34,7 @@ stages:
       inputs:
         buildType: 'current'
         downloadType: 'specific'
+        itemPattern: '**/*.zip'
         downloadPath: '$(System.ArtifactsDirectory)'   
     - task: AzureRMWebAppDeployment@4
       inputs:
