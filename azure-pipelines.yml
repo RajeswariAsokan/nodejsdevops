@@ -11,12 +11,13 @@ stages:
        displayName: "npm install"
        inputs:
          command: install
-     - task: ArchiveFiles@1
-       displayName: "Archive files"
+     - task: ArchiveFiles@2
        inputs:
-         archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
-         archiveType: default
-         rootFolder: "$(System.DefaultWorkingDirectory)"
+          rootFolderOrFile: '$(Build.BinariesDirectory)'
+          includeRootFolder: true
+          archiveType: 'zip'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          replaceExistingArchive: true
      - task: PublishBuildArtifacts@1
        displayName: "Publish artifact"
        inputs:
@@ -42,7 +43,8 @@ stages:
        azureSubscription: "Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)"
        packageForLinux: "$(System.ArtifactsDirectory)/**/*.zip"
        appType: webAppLinux
-       WebAppName: 'devopsnodejsdev'
+       WebAppName: 'nodejs-final'
+    
         
         
 
