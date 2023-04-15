@@ -43,6 +43,7 @@ stages:
         appType: 'webAppLinux'
         WebAppName: 'intelligent'
         WebConfigParameters: 'Node.js'
+        StartupCommand: "pm2 start <index.js> --no-daemon"
     
     
         
