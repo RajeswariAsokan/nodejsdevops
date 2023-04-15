@@ -1,52 +1,21 @@
 trigger:
  - none
-stages:
-- stage: Build
-  jobs:
-  - job: Buildfiles
-    pool: 
-     name: "Azure Pipelines"
-    steps:
-    - task: Npm@1
-      displayName: "npm install"
-      inputs:
-        command: install
-    - task: ArchiveFiles@1
-      displayName: "Archive files"
-      inputs:
-        archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
-        archiveType: default
-        rootFolder: "$(System.DefaultWorkingDirectory)"
-    - task: PublishBuildArtifacts@1
-      displayName: "Publish artifact"
-      inputs:
-        PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-        publishLocation: "container"
-        ArtifactName: nodejs
-- stage: deploy
-  jobs:
-  - job: deployapp
-    pool:
-     name: "Azure Pipelines"
-    steps:
-    - task: DownloadBuildArtifacts@1
-      inputs:
-        buildType: 'current'
-        downloadType: 'specific'
-        itemPattern: '**/*.zip'
-        downloadPath: '$(System.ArtifactsDirectory)'
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Free Trial (0842a7ee-3fe3-4df8-a868-313b0d4adf3a)'
-        packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
-        appType: 'webAppLinux'
-        WebAppName: 'intelligent'
-        WebConfigParameters: 'Node.js'
-        StartupCommand: "pm2 start <index.js> --no-daemon"
-    
-    
-        
-  
-         
-
+pool: 
+ name: "Azure Pipelines"
+steps:
+  - task: Npm@1
+    displayName: "npm install"
+    inputs:
+      command: install
+  - task: ArchiveFiles@1
+    displayName: "Archive files"
+    inputs:
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      archiveType: default
+      rootFolder: "$(System.DefaultWorkingDirectory)"
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish artifact"
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      publishLocation: "container"
+      ArtifactName: nodejs
